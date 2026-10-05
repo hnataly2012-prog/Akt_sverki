@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Рабочее место — Акты сверки</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>Акты сверки взаимных расчетов</h1>
+    <a href="index.html">На главную</a>
+  </header>
+
+  <div class="container">
+    <div class="tabs">
+      <button class="tab active" data-tab="work" type="button">Расчеты</button>
+      <button class="tab" data-tab="counterparties" type="button">Контрагенты</button>
+      <button class="tab" data-tab="company" type="button">Моя организация</button>
+      <button class="tab" data-tab="types" type="button">Типы операций</button>
+    </div>
+
+    <section id="work" class="panel active">
+      <div class="card">
+        <h2>Период сверки</h2>
+        <div class="grid">
+          <div>
+            <label for="workCounterparty">Контрагент</label>
+            <select id="workCounterparty"></select>
+          </div>
+          <div>
+            <label for="dateFrom">Период с</label>
+            <input type="date" id="dateFrom">
+          </div>
+          <div>
+            <label for="dateTo">Период по</label>
+            <input type="date" id="dateTo">
+          </div>
+          <div>
+            <label for="openingAmount">Начальное сальдо, ₽</label>
+            <input type="text" inputmode="decimal" id="openingAmount" value="0,00">
+          </div>
+          <div>
+            <label for="openingDirection">Направление начального сальдо</label>
+            <select id="openingDirection">
+              <option value="0">Задолженности нет</option>
+              <option value="1">Контрагент должен нам</option>
+              <option value="-1">Мы должны контрагенту</option>
+            </select>
+          </div>
+        </div>
+        <div class="actions">
+          <button id="saveOpening" type="button">Сохранить начальное сальдо</button>
+          <button id="loadDemo" class="secondary" type="button">Загрузить пример</button>
+          <button id="goCounterparties" class="light" type="button">Добавить контрагента</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Новая операция</h2>
+        <input type="hidden" id="editOperationId">
+        <div class="grid">
+          <div>
+            <label for="opDate">Дата</label>
+            <input type="date" id="opDate">
+          </div>
+          <div>
+            <label for="opType">Тип операции</label>
+            <select id="opType"></select>
+          </div>
+          <div>
+            <label for="opNumber">№ документа</label>
+            <input id="opNumber" placeholder="Например, 125">
+          </div>
+          <div>
+            <label for="opAmount">Сумма, ₽</label>
+            <input id="opAmount" inputmode="decimal" placeholder="0,00">
+          </div>
+        </div>
+        <div style="margin-top:12px">
+          <label for="opDescription">Документ / описание</label>
+          <input id="opDescription" placeholder="Например, Акт оказанных услуг">
+        </div>
+        <div style="margin-top:12px">
+          <label for="opComment">Комментарий</label>
+          <textarea id="opComment"></textarea>
+        </div>
+        <div class="actions">
+          <button id="saveOperation" type="button">Добавить операцию</button>
+          <button id="cancelEdit" class="secondary" type="button" style="display:none">Отменить редактирование</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Операции за период</h2>
+        <div style="overflow:auto">
+          <table>
+            <thead>
+              <tr>
+                <th>Дата</th>
+                <th>Тип</th>
+                <th>Документ</th>
+                <th>Описание</th>
+                <th class="num">Сумма</th>
+                <th>Влияние</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody id="operationsBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Итоги</h2>
+        <div class="summary">
+          <div class="metric">Начальное сальдо<b id="sumOpening">0,00 ₽</b></div>
+          <div class="metric">Увеличение долга<b id="sumIncrease">0,00 ₽</b></div>
+          <div class="metric">Уменьшение долга<b id="sumDecrease">0,00 ₽</b></div>
+          <div class="metric">Конечное сальдо<b id="sumClosing">0,00 ₽</b></div>
+        </div>
+        <div id="debtStatus" class="status">Выберите контрагента.</div>
+        <div class="actions">
+          <button id="previewAct" type="button">Сформировать акт сверки</button>
+          <button id="exportBackup" class="secondary" type="button">Сохранить резервную копию</button>
+          <label style="margin:0">
+            <span class="file-btn">Загрузить резервную копию</span>
+            <input type="file" id="importBackup" accept=".json" style="display:none">
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section id="counterparties" class="panel">
+      <div class="card">
+        <h2>Контрагент</h2>
+        <input type="hidden" id="cpId">
+        <div class="grid">
+          <div><label for="cpFull">Полное наименование *</label><input id="cpFull"></div>
+          <div><label for="cpShort">Краткое наименование</label><input id="cpShort"></div>
+          <div><label for="cpInn">ИНН</label><input id="cpInn"></div>
+          <div><label for="cpKpp">КПП</label><input id="cpKpp"></div>
+          <div><label for="cpContract">№ договора</label><input id="cpContract"></div>
+          <div><label for="cpContractDate">Дата договора</label><input type="date" id="cpContractDate"></div>
+        </div>
+        <div style="margin-top:12px"><label for="cpNote">Примечание</label><textarea id="cpNote"></textarea></div>
+        <div class="actions">
+          <button id="saveCp" type="button">Сохранить контрагента</button>
+          <button id="clearCp" class="secondary" type="button">Очистить форму</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Справочник контрагентов</h2>
+        <div style="overflow:auto">
+          <table>
+            <thead>
+              <tr>
+                <th>Наименование</th>
+                <th>ИНН</th>
+                <th>КПП</th>
+                <th>Договор</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody id="cpBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="company" class="panel">
+      <div class="card">
+        <h2>Моя организация</h2>
+        <div class="grid">
+          <div><label for="myFull">Полное наименование</label><input id="myFull"></div>
+          <div><label for="myShort">Краткое наименование</label><input id="myShort"></div>
+          <div><label for="myInn">ИНН</label><input id="myInn"></div>
+          <div><label for="myKpp">КПП</label><input id="myKpp"></div>
+          <div><label for="myPosition">Должность подписанта</label><input id="myPosition"></div>
+          <div><label for="mySigner">ФИО подписанта</label><input id="mySigner"></div>
+        </div>
+        <div class="actions"><button id="saveCompany" type="button">Сохранить</button></div>
+      </div>
+    </section>
+
+    <section id="types" class="panel">
+      <div class="card">
+        <h2>Типы операций</h2>
+        <p class="muted">«+» увеличивает долг контрагента перед вашей организацией, «−» уменьшает его. Для возврата или сторно выберите направление по хозяйственной ситуации.</p>
+        <input type="hidden" id="typeId">
+        <div class="grid2">
+          <div><label for="typeName">Название</label><input id="typeName"></div>
+          <div>
+            <label for="typeEffect">Влияние на сальдо</label>
+            <select id="typeEffect">
+              <option value="1">+ Увеличивает долг контрагента</option>
+              <option value="-1">− Уменьшает долг контрагента</option>
+            </select>
+          </div>
+        </div>
+        <div class="actions">
+          <button id="saveType" type="button">Сохранить тип</button>
+          <button id="clearType" class="secondary" type="button">Очистить</button>
+        </div>
+      </div>
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>Тип операции</th>
+              <th>Влияние</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody id="typesBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <div id="printArea"><div class="act" id="actContent"></div></div>
+  <script src="js/app.js"></script>
+</body>
+</html>

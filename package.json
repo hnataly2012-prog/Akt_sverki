@@ -1,0 +1,9 @@
+{
+  "name": "akty-sverki",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Локальное веб-приложение для актов сверки взаимных расчетов",
+  "scripts": {
+    "start": "npx --yes serve . -l 4173 --no-clipboard"
+  }
+}

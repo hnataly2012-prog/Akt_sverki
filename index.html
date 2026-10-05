@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Акты сверки взаимных расчетов</title>
+  <meta name="description" content="Локальное приложение для учёта операций и печати акта сверки взаимных расчетов.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="assets/favicon.svg" alt="">
+      Акты сверки
+    </a>
+    <nav class="nav">
+      <a class="ghost" href="#how">Как это работает</a>
+      <a class="primary" href="app.html">Открыть рабочее место</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Сверка расчётов без таблиц в Excel</h1>
+      <p class="lead">
+        Ведите контрагентов, операции и начальное сальдо, затем печатайте акт сверки.
+        Все данные остаются в вашем браузере.
+      </p>
+      <div class="hero-actions">
+        <a class="btn" href="app.html">Начать работу</a>
+        <a class="btn secondary" href="app.html?demo=1">Посмотреть пример</a>
+      </div>
+    </section>
+
+    <h2 class="section-title">Что умеет приложение</h2>
+    <section class="features">
+      <article class="card">
+        <h3>Справочники</h3>
+        <p>Карточка вашей организации, список контрагентов и настраиваемые типы операций.</p>
+      </article>
+      <article class="card">
+        <h3>Расчёты за период</h3>
+        <p>Начальное сальдо, начисления, оплаты и корректировки складываются в конечный долг.</p>
+      </article>
+      <article class="card">
+        <h3>Акт и резервная копия</h3>
+        <p>Готовый акт для печати и выгрузка данных в JSON, чтобы ничего не потерять.</p>
+      </article>
+    </section>
+
+    <h2 class="section-title" id="how">Как начать</h2>
+    <section class="steps">
+      <article class="card">
+        <h3>1. Организация</h3>
+        <p>Укажите наименование, ИНН и подписанта — они попадут в печатную форму.</p>
+      </article>
+      <article class="card">
+        <h3>2. Контрагент и период</h3>
+        <p>Добавьте сторону договора, выберите даты сверки и начальное сальдо.</p>
+      </article>
+      <article class="card">
+        <h3>3. Операции и акт</h3>
+        <p>Внесите документы и сформируйте акт. При необходимости сохраните резервную копию.</p>
+      </article>
+    </section>
+
+    <p class="note">
+      Это офлайн-инструмент: сервер не нужен. Откройте сайт в браузере, работайте локально
+      и печатайте акт через стандартный диалог печати.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">Акты сверки взаимных расчетов · данные хранятся только на этом компьютере</div>
+  </footer>
+</body>
+</html>
