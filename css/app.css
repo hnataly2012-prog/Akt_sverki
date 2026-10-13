@@ -1,0 +1,184 @@
+:root {
+  --bg: #f4f6f8;
+  --card: #fff;
+  --text: #17202a;
+  --muted: #667085;
+  --line: #d9dee7;
+  --accent: #2457d6;
+  --danger: #b42318;
+  --ok: #067647;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+header.app-header {
+  background: #17202a;
+  color: #fff;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+header.app-header h1 { margin: 0; font-size: 22px; }
+
+header.app-header a {
+  color: #fff;
+  text-decoration: none;
+  border: 1px solid #3a4654;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 700;
+}
+
+.container { max-width: 1280px; margin: 20px auto; padding: 0 16px; }
+
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+
+.tab {
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.panel { display: none; }
+.panel.active { display: block; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+h2, h3 { margin-top: 0; }
+
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid #cbd2dc;
+  border-radius: 7px;
+  background: #fff;
+  font: inherit;
+}
+
+textarea { min-height: 70px; }
+
+.actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; align-items: center; }
+
+button {
+  border: 0;
+  border-radius: 7px;
+  padding: 9px 13px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+button.secondary { background: #5b6472; }
+button.danger { background: var(--danger); }
+button.light {
+  background: #eef2f7;
+  color: #27364b;
+  border: 1px solid #d7dde6;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { border: 1px solid var(--line); padding: 8px; text-align: left; }
+th { background: #f0f3f7; }
+.num { text-align: right; white-space: nowrap; }
+.muted { color: var(--muted); }
+
+.summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+
+.metric {
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 12px;
+}
+
+.metric b { display: block; font-size: 18px; margin-top: 5px; }
+
+.status {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #eef4ff;
+  font-weight: 700;
+}
+
+.empty { text-align: center; color: var(--muted); padding: 20px; }
+
+.file-btn {
+  display: inline-block;
+  padding: 9px 13px;
+  background: #5b6472;
+  color: #fff;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+#printArea { display: none; }
+
+@media (max-width: 900px) {
+  .grid, .summary { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .grid, .grid2, .summary { grid-template-columns: 1fr; }
+}
+
+@media print {
+  body * { visibility: hidden; }
+  #printArea, #printArea * { visibility: visible; }
+  #printArea {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: #fff;
+    color: #000;
+  }
+  @page { size: A4 landscape; margin: 10mm; }
+}
+
+.act { font-family: "Times New Roman", serif; font-size: 12px; padding: 8px; }
+.act h1 { text-align: center; font-size: 17px; margin: 0 0 5px; }
+.act .center { text-align: center; }
+.act table { font-size: 10px; }
+.act th, .act td { padding: 4px; border: 1px solid #000; }
+.act .signs { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-top: 25px; }
+.act .signature { margin-top: 40px; border-top: 1px solid #000; padding-top: 4px; }
